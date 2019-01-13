@@ -1,0 +1,19 @@
+diff --git a/GPSBabel.pro b/GPSBabel.pro
+index 4abab8d..429f5c5 100644
+--- a/GPSBabel.pro
++++ b/GPSBabel.pro
+@@ -149,12 +149,12 @@ win32 {
+   }
+   SOURCES += gbser_win.cc
+   JEEPS += jeeps/gpsusbwin.cc
+-  LIBS += "C:/Program Files/Windows Kits/8.0/Lib/win8/um/x86/setupapi.lib" "C:/Program Files/Windows Kits/8.0/Lib/win8/um/x86/hid.lib"
++  LIBS += "C:/Program Files (x86)/Windows Kits/8.0/Lib/win8/um/x64/SetupAPI.Lib" "C:/Program Files (x86)/Windows Kits/8.0/Lib/win8/um/x64/hid.lib"
+ }
+
+ win32-msvc*{
+   DEFINES += _CRT_SECURE_NO_DEPRECATE
+-  INCLUDEPATH += ../../src/core src/core
++  INCLUDEPATH += "..\\..\\src\\core" "src\\core"
+   QMAKE_CXXFLAGS += /MP -wd4100
+   TEMPLATE=vcapp
+ }
