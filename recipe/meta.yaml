@@ -1,0 +1,73 @@
+{% set name = "gpsbabel" %}
+{% set version = "1.5.4" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  fn: gpsbabel_1_5_4.tar.gz
+  url: https://github.com/gpsbabel/gpsbabel/archive/gpsbabel_1_5_4.tar.gz
+  sha256: 8cd740db0b92610abff71e942e8a987df58cd6ca5f25cca86e15f2b00e190704
+  patches:
+    - 0001_qt5_string_compare_ambiguity.patch
+    - 0002_GPSBabel-pro_fix_win_paths.patch  # [win]
+
+build:
+  number: 1000
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - pkg-config  # [unix]
+    - m2-patch  # [win]
+  host:
+    - qt 5.9.*
+  run:
+    - qt 5.9.*
+
+test:
+  requires:
+    {% if win %}
+    - m2-diffutils
+    - m2-libintl
+    - m2-libiconv
+    {% endif %}
+  source_files:
+    # Test gpx, as minimum support smoke test
+    - geocaching.loc
+    - reference/track/gtrnctr_power.tcx
+    - reference/track/gtrnctr_power.gpx
+    - reference/track/gpx_garmin_extensions.gpx
+    - reference/basecamp.gpx
+    - reference/basecamp~gpx.gpx
+    - reference/extensiondata.unicsv
+    - reference/extensiondata~unicsv.gpx
+    - reference/bigtime.gpx
+    - reference/bigtime.gpx
+    - reference/unknowntag.gpx
+    - reference/unknowntag~gpx.gpx
+    - reference/unknowntag2.gpx
+    - reference/unknowntag2~gpx.gpx
+
+about:
+  home: https://www.gpsbabel.org
+  license: GPL-2.0
+  license_family: GPL
+  license_file: COPYING
+  summary: GPSBabel converts waypoints, tracks, and routes between popular GPS receivers
+  description: |
+    GPSBabel converts waypoints, tracks, and routes between popular GPS
+    receivers such as Garmin or Magellan and mapping programs like Google Earth
+    or Basecamp. Literally hundreds of GPS receivers and programs are
+    supported. It also has powerful manipulation tools for such data. such as
+    filtering duplicates points or simplifying tracks. It has been downloaded
+    and used tens of millions of times since it was first created in 2001, so
+    it's stable and trusted
+  doc_url: https://www.gpsbabel.org/readme.html
+  dev_url: https://github.com/gpsbabel/gpsbabel
+
+extra:
+  recipe-maintainers:
+    - dakcarto
